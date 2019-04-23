@@ -16,6 +16,9 @@ Using `mongoimport`, import the JSON data from the `movies.json` file into the c
 
 
 ```bash
+# Run mongod
+mongod
+
 mongoimport --db video --collection movies --file movies.json --jsonArray
 mongo
 ```
