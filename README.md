@@ -37,7 +37,7 @@ db.movies.find()
 **<u>Your query</u>**:
 
 ```js
-
+ db.movies.find()
 ```
 
  
@@ -47,7 +47,7 @@ db.movies.find()
 **<u>Your query</u>**:
 
 ```js
-
+ db.movies.find().pretty()
 ```
 
  
@@ -57,7 +57,7 @@ db.movies.find()
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({year:  2000})
 ```
 
  
@@ -67,29 +67,29 @@ db.movies.find()
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({rate:  "8.8"})
 ```
 
  
 
-### 5. Retrieve the movie with the field `_id` "5cbc6943c95c41149fd2f3b5"
+#### 5. Retrieve the movie with the field `_id` "5cbf03ca570ffc7ef7ac4861"
 
 To specify an **ObjectID**, use the format **ObjectId(’id’)**, 
 
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find( {_id: ObjectId("5cbf03ca570ffc7ef7ac4861")} )
 ```
 
  
 
-### 6.  Retrieve all documents in our collection where the field `year` equals `'2000'` **AND** the `rate` equals `'8.5'`.
+### 6.  Retrieve all documents in our collection where the field `year` equals `2000` **AND** the `rate` equals `'8.5'`.
 
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({ $and: [{year: 2000}, {rate:  "8.5"}]})
 ```
 
  
@@ -99,7 +99,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({ $or: [{year: 2000}, {year:  2005}]})
 ```
 
  
@@ -109,7 +109,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({ rate: { $ne: "9.0"} }).limit(10)
 ```
 
  
@@ -121,7 +121,14 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+  db.movies.find({ 
+    $nor: [
+      {director:"Steven Spielberg"},
+      { director:"Quentin Tarantino"}
+    ] 
+  }, 
+  	{title: 1, director: 1, _id: 0}
+  )
 ```
 
  
@@ -131,7 +138,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+ db.movies.find({}, {title: 1, year: 1, genre: 1, _id: 0})
 ```
 
  
@@ -141,7 +148,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({}, {title: 1}).sort({title: 1})
 ```
 
  
@@ -151,7 +158,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({}, {title: 1, director: 1}).sort({title: 1}).skip(5)
 ```
 
  
@@ -161,7 +168,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+  db.movies.find({ director: {$eq: "Robert Zemeckis"} } , {director: 1, title: 1})
 ```
 
  
@@ -171,7 +178,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({ rate: {$ne: "8.5"} } , {title: 1, rate: 1, _id: 0})
 ```
 
  
@@ -181,7 +188,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+  db.movies.find({ year: {$gte: 2015} } , {title: 1, year: 1, director: 1, _id: 0})
 ```
 
  
@@ -191,7 +198,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.find({ year: {$lt: 2000} } , {title: 1, year: 1, director: 1, _id: 0})
 ```
 
  
@@ -201,15 +208,15 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+  db.movies.find({ year: {$in: [2000, 2005, 2010] } } , {title: 1, year: 1}).sort({year: 1})
 ```
 
  
 
-### 18. Retrieve all documents from the `movies` collection created in the years 1999 and 2010 and exluding the movie with `title` "Inception"
+### 18. Retrieve all documents from the `movies` collection created in the years 1999 and 2010 and excluding the movie with `title` "Inception"
 
 ```js
-
+  db.movies.find({ $and: [{ year: {$in: [1999, 2010] }}, { title: { $ne: "Inception" } }] }, {title: 1, year: 1})
 ```
 
 
@@ -219,27 +226,32 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+  db.movies.deleteMany({ year: 1999 })
 ```
 
 
 
 
 
-### 20. Delete document from the `movies` collection with the `_id`  "5cbc6943c95c41149fd2f3bc".
+### 20. Delete document from the `movies` collection with the `_id`  "5cbf03ca570ffc7ef7ac4869".
 
  **<u>Your query</u>**:
 
 ```js
-
+  db.movies.deleteOne({ _id: ObjectId("5cbf03ca570ffc7ef7ac4869") })
 ```
 
  
 
-### 21. Update all documents from the `movies` collection created in the `year` 2017 and add an additional named `rating`: 
+### 21. Update all documents from the `movies` collection created in the `year` 2017 and add an additional field named `rating`: 
 
-```json
-
+```js
+var ratingObj = {
+  rating: "TV-G",
+  "violence": false,
+  "drug_use": false,
+  "strong_language": false
+}
 ```
 
 ###  
@@ -247,7 +259,7 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 **<u>Your query</u>**:
 
 ```js
-
+db.movies.updateMany({ year: 2017 }, {$set: {rating: ratingObj}})
 ```
 
  
@@ -256,12 +268,18 @@ To specify an **ObjectID**, use the format **ObjectId(’id’)**,
 
 ### 22. Update the document from the `movies` collection with  `title` "Dunkirk" and set `rating`  to "PG-13" and fields  `violence` and `strong_language` to `true`  : 
 
-### 
+
 
 **<u>Your query</u>**:
 
 ```js
-
+ db.movies.updateMany(
+   { title: "Dunkirk" },
+   {$set: { 
+     "rating.rating": "PG-13",
+     "rating.violence": true,
+     "rating.strong_language": true
+   }})
 ```
 
  
@@ -279,6 +297,12 @@ let moviesToDelete = ["12 Angry Men", "Se7en", "Cidade de Deus", "Braveheart"]
 **<u>Your query</u>**:
 
 ```js
-
+  db.movies.deleteMany(
+    { 
+      title: { 
+      	$in: ["12 Angry Men", "Se7en", "Cidade de Deus", "Braveheart"] 
+    	} 
+    }
+  )
 ```
 
