@@ -1,4 +1,7 @@
-# Code Along - Mongo DB
+# Code Along - MongoDB Movies
+
+ 
+<br>
 
 
 ## Intro
@@ -9,28 +12,68 @@ When working with any Database, there are a few operations that we will always n
 
 ![img](https://i.imgur.com/CRowB2i.png)
 
-
 ## Getting Started
 
 Using `mongoimport`, import the JSON data from the `movies.json` file into the collection `movies` in the `video` database.
 
+<br>
+
+### Linux
 
 ```bash
 # Run mongod
-mongod
+sudo service mongod start
 
+# Check if mongod process is running
+ps -e | grep 'mongod'
+
+# Import the data from `movies.json` to the `movies` database
 mongoimport --db video --collection movies --file movies.json --jsonArray
+
+# Run mongo shell
 mongo
 ```
 
+<br>
 
-```js
-use video
 
-show collections
-db.movies.find()
+### Mac
+
+```bash
+# Run mongodb
+brew services start mongodb-community
+
+# Check if mongod process is running
+ps -e | grep 'mongod'
+
+
+# Import the data from `movies.json` to the `movies` database
+mongoimport --db video --collection movies --file movies.json --jsonArray
+
+# Run mongo shell
+mongo
 ```
 
+<br>
+
+
+#### ... continued (Mac & Linux)
+
+```js
+# List databases
+show dbs
+
+# Switch to database `video`
+use video
+
+# Show collections
+show collections
+
+# List all the documents in the `movies` collection
+db.movies.find().pretty()
+```
+
+<br>
 
 ## Tasks
 
@@ -43,6 +86,8 @@ db.movies.find()
  db.movies.find()
 ```
 
+<br>
+
  
 
 ### 2. Retrieve all the documents  from the  `movies` collection and prettify the result:
@@ -53,6 +98,7 @@ db.movies.find()
  db.movies.find().pretty()
 ```
 
+<br>
  
 
 ### 3. Retrieve all the documents  from the  `movies` collection where the field `year` is  2000:
@@ -63,6 +109,8 @@ db.movies.find()
 db.movies.find({year:  2000})
 ```
 
+<br>
+
  
 
 ### 4. Retrieve all the documents from the `movies`  collection where the field `rate` is "8.8"
@@ -72,6 +120,8 @@ db.movies.find({year:  2000})
 ```js
 db.movies.find({rate:  "8.8"})
 ```
+
+<br>
 
  
 
@@ -86,6 +136,8 @@ db.movies.find( {_id: ObjectId("5cbf03ca570ffc7ef7ac4861")} )
 ```
 
  
+<br>
+
 
 ### 6.  Retrieve all documents in our collection where the field `year` equals `2000` **AND** the `rate` equals `'8.5'`.
 
@@ -94,6 +146,8 @@ db.movies.find( {_id: ObjectId("5cbf03ca570ffc7ef7ac4861")} )
 ```js
 db.movies.find({ $and: [{year: 2000}, {rate:  "8.5"}]})
 ```
+
+<br>
 
  
 
@@ -106,6 +160,8 @@ db.movies.find({ $or: [{year: 2000}, {year:  2005}]})
 ```
 
  
+<br>
+
 
 ### 8. Retrieve all documents from the `movies` collection that do not have a rate of “9.0” and limit the result to 10 documents.
 
@@ -115,7 +171,8 @@ db.movies.find({ $or: [{year: 2000}, {year:  2005}]})
 db.movies.find({ rate: { $ne: "9.0"} }).limit(10)
 ```
 
- 
+<br>
+
 
 ### 9. Retrieve all documents from the `movies` collection where field `director` is `not` "Steven Spielberg" `or` "Quentin Tarantino".  
 
@@ -135,6 +192,8 @@ db.movies.find({ rate: { $ne: "9.0"} }).limit(10)
 ```
 
  
+<br>
+
 
 ### 10. Retrieve all documents from the `movies` collection, using the projection return only the fields `title`, `year`, `genre` and exclude field `_id`.
 
@@ -145,6 +204,8 @@ db.movies.find({ rate: { $ne: "9.0"} }).limit(10)
 ```
 
  
+<br>
+
 
 ### 11. Retrieve all documents from the `movies` collection including only `title` field , using and sort them by `name` 
 
@@ -153,6 +214,9 @@ db.movies.find({ rate: { $ne: "9.0"} }).limit(10)
 ```js
 db.movies.find({}, {title: 1}).sort({title: 1})
 ```
+
+
+<br>
 
  
 
@@ -164,6 +228,8 @@ db.movies.find({}, {title: 1}).sort({title: 1})
 db.movies.find({}, {title: 1, director: 1}).sort({title: 1}).skip(5)
 ```
 
+<br>
+
  
 
 ### 13. Retrieve all documents from the `movies` collection where `director` field `equals`  "Robert Zemeckis"
@@ -173,6 +239,9 @@ db.movies.find({}, {title: 1, director: 1}).sort({title: 1}).skip(5)
 ```js
   db.movies.find({ director: {$eq: "Robert Zemeckis"} } , {director: 1, title: 1})
 ```
+
+
+<br>
 
  
 
@@ -185,6 +254,8 @@ db.movies.find({ rate: {$ne: "8.5"} } , {title: 1, rate: 1, _id: 0})
 ```
 
  
+<br>
+
 
 ### 15. Retrieve all documents from the `movies` collection where the `year` field is greater than or equal 2015. Using projection include only `title` , `year`and `director` fields.
 
@@ -193,6 +264,9 @@ db.movies.find({ rate: {$ne: "8.5"} } , {title: 1, rate: 1, _id: 0})
 ```js
   db.movies.find({ year: {$gte: 2015} } , {title: 1, year: 1, director: 1, _id: 0})
 ```
+
+
+<br>
 
  
 
@@ -203,6 +277,9 @@ db.movies.find({ rate: {$ne: "8.5"} } , {title: 1, rate: 1, _id: 0})
 ```js
 db.movies.find({ year: {$lt: 2000} } , {title: 1, year: 1, director: 1, _id: 0})
 ```
+
+
+<br>
 
  
 
@@ -215,12 +292,17 @@ db.movies.find({ year: {$lt: 2000} } , {title: 1, year: 1, director: 1, _id: 0})
 ```
 
  
+<br>
+
 
 ### 18. Retrieve all documents from the `movies` collection created in the years 1999 and 2010 and excluding the movie with `title` "Inception"
 
 ```js
   db.movies.find({ $and: [{ year: {$in: [1999, 2010] }}, { title: { $ne: "Inception" } }] }, {title: 1, year: 1})
 ```
+
+
+<br>
 
 
 
@@ -233,6 +315,7 @@ db.movies.find({ year: {$lt: 2000} } , {title: 1, year: 1, director: 1, _id: 0})
 ```
 
 
+<br>
 
 
 
@@ -245,6 +328,8 @@ db.movies.find({ year: {$lt: 2000} } , {title: 1, year: 1, director: 1, _id: 0})
 ```
 
  
+<br>
+
 
 ### 21. Update all documents from the `movies` collection created in the `year` 2017 and add an additional field named `rating`: 
 
@@ -266,6 +351,8 @@ db.movies.updateMany({ year: 2017 }, {$set: {rating: ratingObj}})
 ```
 
  
+<br>
+
 
 
 
@@ -286,6 +373,8 @@ db.movies.updateMany({ year: 2017 }, {$set: {rating: ratingObj}})
 ```
 
  
+
+<br>
 
 
 
