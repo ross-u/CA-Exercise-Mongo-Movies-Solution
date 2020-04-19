@@ -1,4 +1,4 @@
-# Exercise - MongoDB Movies - Solution
+Ω# Exercise - MongoDB Movies - Solution
 
  
 
@@ -120,6 +120,7 @@ You may use the following Lecture Notes as your reference:
 <br>
 
 <hr>
+
 
 ## Tasks
 
@@ -257,10 +258,13 @@ db.movies.find( { rate: { $ne: "9.0"  } }).limit(10)
 
 ```js
 db.movies.find({
-	 $or: [ 
-     			{ director: {$ne: "Steven Spielberg"}} ,
-     			{ director: {$ne:  "Quentin Tarantino"}}
-   ] }, { title: 1, director: 1, _id:0 } )
+    $or: [ 
+      {  director: {$ne: "Steven Spielberg"}  },
+      {  director: {$ne:  "Quentin Tarantino"}  }
+    ]
+  }, 
+  { title: 1, director: 1, _id:0 } 
+)
 ```
 
   
@@ -325,7 +329,9 @@ db.movies.find( { director : { $eq: "Robert Zemeckis" }   }, { title: 1, directo
 
 
 
-### 14. Retrieve all documents from the `movies` collection where the `rate` field is different than "8.5". Using projection include only `title` and `rate` field, excluding `_id`
+### 14. Retrieve all documents from the `movies` collection where the `rate` field is different than "8.5". 
+
+### Using projection include only `title` and `rate` field, excluding `_id`
 
 **<u>Your query</u>**:
 
@@ -336,7 +342,7 @@ db.movies.find( { $nor: [ { rate: "8.5" } ]   }, { title: 1, rate: 1, _id: 0 } )
   
 
 ```js
-  db.movies.find({ rate: { $ne: "8.5"}  } , {title: 1, rate: 1, _id: 0})
+db.movies.find({ rate: { $ne: "8.5"}  } , {title: 1, rate: 1, _id: 0})
 ```
 
 <br>
@@ -376,11 +382,10 @@ db.movies.find( { year: { $lt: 2000 } }, { title: 1, year: 1, director: 1, _id: 
 **<u>Your query</u>**:
 
 ```js
-db.movies.find({ 
-  	year: { $in: [2000, 2005, 2010] }
-	},
-	{title: 1, year: 1}
-).sort( { year: 1})
+db.movies.find(
+  { year: { $in: [2000, 2005, 2010] }  },
+	{title: 1, year: 1 }
+).sort( { year: 1} )
 ```
 
   
@@ -511,12 +516,9 @@ db.movies.deleteMany({
 
 
 ```js
-db.movies.deleteMany({ 
- title: { $in: moviesToDelete }
-})
+db.movies.deleteMany({  title: { $in: moviesToDelete }   } )
 ```
 
  
 
 <br>
-
