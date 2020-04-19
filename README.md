@@ -1,4 +1,4 @@
-Ω# Exercise - MongoDB Movies - Solution
+# Exercise - MongoDB Movies - Solution
 
  
 
