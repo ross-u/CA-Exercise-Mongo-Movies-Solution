@@ -287,7 +287,7 @@ db.movies.find({}, { title: 1, year: 1, genre: 1, _id: 0} )
 
 
 
-### 11. Retrieve all documents from the `movies` collection including only `title` field , using and sort them by `title` 
+### 11. Retrieve all documents from the `movies` collection, including only the field `title` using the projection and sorting them by `title` 
 
 **<u>Your query</u>**:
 
